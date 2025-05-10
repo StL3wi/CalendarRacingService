@@ -10,7 +10,7 @@ A disocrd bot that syncs with a google calendar to create discord events and thr
 
 ## Setup
 1. Clone the repository
-2. Rename the 'config.Template.json' to 'config.json', and fill in the values with your own
+2. Rename the 'config.Template.json' to 'config.json', and fill in the values with your own [values](https://github.com/StL3wi/CalendarRacingService?tab=readme-ov-file#the-configjson-file)
 3. [get your credentials.json from the google cloud console](https://developers.google.com/workspace/guides/create-credentials)
 4. Run the bot.
 
