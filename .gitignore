@@ -1,0 +1,13 @@
+# .net build folders
+bin/
+obj/
+.vs/
+debug/
+config.json
+credentials.json
+token.json
+
+#local
+Events/
+*.user
+*.suo

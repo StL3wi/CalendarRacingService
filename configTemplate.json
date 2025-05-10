@@ -1,0 +1,18 @@
+{
+  "DiscordToken": "YOUR_DISCORD_TOKEN_HERE",
+  "GoogleKey": "YOUR_GOOGLE_API_KEY_HERE",
+  "CalendarId": "YOUR_CALENDAR_ID_HERE",
+  "ServerId": "YOUR_SERVER_ID_HERE",
+  "ChannelId": "YOUR_CHANNEL_ID_HERE",
+  "ThreadCreateTime": 1,
+  "EventCreateTime": 24,
+  "RefreshTimer": 1,
+  "CalendarRefresh": 1,
+  "ConsoleLogging": true,
+  "DebugLogging": true,
+  "ResetOnRestart": true,
+  "TagedUsers": [],
+  "AdminId": [],
+  "MaxDays": 2,
+  "DebugMode": false
+}
