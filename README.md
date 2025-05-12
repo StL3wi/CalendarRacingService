@@ -1,6 +1,6 @@
 # Calendar Racing Service
 
-A disocrd bot that syncs with a google calendar to create discord events and threads
+A discord bot that syncs with a google calendar to create discord events and threads
 This is a work in progress. The bot does work, but there are some bugs and features that I want to add. 
 I am open to suggestions and pull requests.
 I have been working on this bot for over a year with different improvements and features with each version.
