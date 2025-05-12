@@ -30,5 +30,5 @@ A disocrd bot that syncs with a google calendar to create discord events and thr
 - TagedUsers - A list of users to tag in for each thread created
 - AdminId - a list of discord user ids that are allowed to use the admin commands
 - MaxDays - The max days to look ahead for events
-- DebugMode - obsolute
+- DebugMode - adds more debugging to the console. primarily used for myself when programming. future edition this will not allow the bot to create any discord events or threads while on
 
