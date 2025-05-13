@@ -69,7 +69,6 @@ public class GoogleCalendarService
                     ServerID = _config.ServerId
                 };
                 calendarEvents.Add(calendarEvent);
-                //Console.WriteLine($"Event Title {eventItem.Summary}  \n StartTime: {start}");
 
                 // Check to see if the file is created && if it is the same
                 

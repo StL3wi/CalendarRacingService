@@ -11,8 +11,9 @@
     public double CalendarRefresh { get; set; }
     public bool DebugLogging { get; set; }
     public bool ResetOnRestart { get; set; }
-    public List<string> TagedUsers { get; set; }
+    public List<string> TaggedUsers { get; set; }
     public List<ulong> AdminId { get; set; }
     public int MaxDays { get; set; }
     public bool DebugMode { get; set; }
+    public ulong BotAdminID { get; set; } 
 }

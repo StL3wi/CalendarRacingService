@@ -14,6 +14,7 @@ public class DiscordService
     public static JsonSaver _jsonSaver;
     private static SocketGuild _guild;
     private static SocketTextChannel _channel;
+    private static SocketUser _botAdmin;
     public DiscordService(Config config)
     {
         _config = config;
@@ -31,6 +32,7 @@ public class DiscordService
             discordConfig.LogLevel = LogSeverity.Debug;
         }
 
+        _botAdmin = _client.GetUser(_config.BotAdminID);
         _client = new DiscordSocketClient(discordConfig);
     }
 
@@ -170,7 +172,21 @@ public class DiscordService
     private async Task EndEvent(CalendarEvent calEvent)
     {
         SocketGuildEvent guildEvent = GetGuildEventById(calEvent.ServerID, calEvent.DiscordEventId);
-        await guildEvent.EndAsync();
+        SocketUser user = _client.GetUser(_config.BotAdminID);
+        try
+        {
+            await guildEvent.EndAsync();
+        }
+        catch (Exception ex)
+        {   
+            if (_config.DebugMode) 
+            { 
+                Console.WriteLine($"Error ending event: {ex.Message}");
+                await SendDirectMessage($"Error ending event: {ex.Message}", _botAdmin);
+            }
+            
+            Console.WriteLine($"Error ending event: {ex.Message}");
+        }
     }
 
     // Close the Discord Thread
@@ -183,6 +199,7 @@ public class DiscordService
             props.Locked = true;
         });
     }
+
     // Handle scheduled events
     private async Task GuildScheduledEventStartedAsync(SocketGuildEvent guildEvent)
     {
@@ -589,6 +606,18 @@ public class DiscordService
         calEvent.ArchiveTime = 1440; // Set the archive time to 1 day
     }
     
+    // Send a message to a specific user
+    public static Task SendDirectMessage(string message, SocketUser user)
+    {
+        if (user == null)
+        {
+            Console.WriteLine("Cannot send message: User is null");
+            return Task.CompletedTask;
+        }
+        // Send a direct message
+        user.SendMessageAsync(message);
+        return Task.CompletedTask;
+    }
     // Send a message to a specific channel
     public static Task SendMessageAsync(string message, SocketTextChannel channel)
     {

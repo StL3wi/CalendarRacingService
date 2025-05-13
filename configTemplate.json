@@ -14,5 +14,6 @@
   "TagedUsers": [],
   "AdminId": [],
   "MaxDays": 2,
-  "DebugMode": false
+  "DebugMode": false,
+  "BotAdminID": 0
 }
