@@ -6,35 +6,7 @@ I am open to suggestions and pull requests.
 I have been working on this bot for over a year with different improvements and features with each version.
 There used to be a version with SQL, but I have since moved to using JSON files for the events as I found it might be easier for each user to work with.
 
-# Future Features
 
-## Admin DM Commands
-- `!EndAll` - Ends all events
-- `!CloseAll` - Closes all open threads
-- `!AddEvent` - Adds event to the Google Calendar
-- `!RemoveEvent` - Removes event from the Google Calendar
-- `!EditEvent` - Edits event in the Google Calendar
-
-## Admin Commands
-- `!end` - Ends the current event
-- `!close` - Closes the current thread
-  - *These are in the works as of 5/12*
-
-## User Commands
-- `!Info` - Returns information about the event
-- `!IntrestedAll` - Adds the user to the config.json file under the TaggedUsers list to always be tagged in all future events
-  - The bot will return a message confirming the user's decision, as this may be a lot of pings
-- `!NotIntrestedAll` - Removes the user from the config.json file under the TaggedUsers list to always be tagged in all future events
-- `!Upcoming` - Returns a list of all upcoming events (Range will be set in the config.json file)
-
-## Future Improvements
-- Improve and implement Serilog logging
-- Improve and implement the console to be more user friendly
-
-## General Use Features
-- **Debug Mode** - Adds more debugging to the console. Saves all logs to a file, and allows the user to test features on a different server
-- **ResetOnRestart** - The bot will delete all JSON files for the calendar events and start fresh
-- **DebugLogging** - The bot will log extra events to the console and to a file
 	
 
 ## Feature List
@@ -67,3 +39,34 @@ There used to be a version with SQL, but I have since moved to using JSON files 
 - MaxDays - The max days to look ahead for events
 - DebugMode - adds more debugging to the console. primarily used for myself when programming. future edition this will not allow the bot to create any discord events or threads while on
 
+
+----------------------------------------------------------------------------------------
+# Future Features
+
+## Admin DM Commands
+- `!EndAll` - Ends all events
+- `!CloseAll` - Closes all open threads
+- `!AddEvent` - Adds event to the Google Calendar
+- `!RemoveEvent` - Removes event from the Google Calendar
+- `!EditEvent` - Edits event in the Google Calendar
+
+## Admin Commands
+- `!end` - Ends the current event
+- `!close` - Closes the current thread
+  - *These are in the works as of 5/12*
+
+## User Commands
+- `!Info` - Returns information about the event
+- `!IntrestedAll` - Adds the user to the config.json file under the TaggedUsers list to always be tagged in all future events
+  - The bot will return a message confirming the user's decision, as this may be a lot of pings
+- `!NotIntrestedAll` - Removes the user from the config.json file under the TaggedUsers list to always be tagged in all future events
+- `!Upcoming` - Returns a list of all upcoming events (Range will be set in the config.json file)
+
+## Future Improvements
+- Improve and implement Serilog logging
+- Improve and implement the console to be more user friendly
+
+## General Use Features
+- **Debug Mode** - Adds more debugging to the console. Saves all logs to a file, and allows the user to test features on a different server
+- **ResetOnRestart** - The bot will delete all JSON files for the calendar events and start fresh
+- **DebugLogging** - The bot will log extra events to the console and to a file
