@@ -47,6 +47,7 @@ There used to be a version with SQL, but I have since moved to using JSON files 
 - AdminId - a list of discord user ids that are allowed to use the admin commands
 - MaxDays - The max days to look ahead for events
 - DebugMode - adds more debugging to the console. primarily used for myself when programming. future edition this will not allow the bot to create any discord events or threads while on
+- BotAdminID - The id of the bot admin -- used for future debugging features
 
 
 ----------------------------------------------------------------------------------------
