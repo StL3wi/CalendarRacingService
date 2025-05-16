@@ -254,6 +254,54 @@ public class JsonSaver
         }
     }
 
+    // Delete an event file
+    public string DeleteEvent(string eventId, ulong serverId, ulong channelId)
+    {
+        string safeFileName = MakeSafeFileName(eventId);
+        string filePath = Path.Combine(_baseDirectory, serverId.ToString(), channelId.ToString(), $"{safeFileName}.json");
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                File.Delete(filePath);
+                Console.WriteLine($"Deleted event file: {filePath}");
+                return $"{eventId} -- Deleted";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting event file {filePath}: {ex.Message}");
+                return $"{eventId} -- Error: {ex.Message}";
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Event file not found: {filePath}");
+            return $"{eventId} -- Not Found";
+        }
+    }
+
+    // Delete an event file -- Async
+    public async Task DeleteEventAsync(string eventId, ulong serverId, ulong channelId)
+    {
+        string safeFileName = MakeSafeFileName(eventId);
+        string filePath = Path.Combine(_baseDirectory, serverId.ToString(), channelId.ToString(), $"{safeFileName}.json");
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                await Task.Run(() => File.Delete(filePath));
+                Console.WriteLine($"Deleted event file: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting event file {filePath}: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Event file not found: {filePath}");
+        }
+    }
     // Update multiple properties at once with a dictionary
     public async Task<bool> UpdateEventPropertiesAsync(string eventId, ulong serverId, ulong channelId,
         Dictionary<string, object> propertyUpdates)

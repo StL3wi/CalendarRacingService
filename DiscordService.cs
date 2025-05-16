@@ -15,7 +15,8 @@ public class DiscordService
     private static SocketGuild _guild;
     private static SocketTextChannel _channel;
     private static SocketUser _botAdmin;
-    public DiscordService(Config config)
+    private static GoogleCalendarService _googleCalendarService;
+    public DiscordService(Config config, GoogleCalendarService googleCalendarService)
     {
         _config = config;
         _calendarEvents = new Dictionary<string, CalendarEvent>();
@@ -31,9 +32,8 @@ public class DiscordService
         {
             discordConfig.LogLevel = LogSeverity.Debug;
         }
-
-        _botAdmin = _client.GetUser(_config.BotAdminID);
         _client = new DiscordSocketClient(discordConfig);
+        _googleCalendarService = googleCalendarService;
     }
 
     private bool _isInitialized = false;
@@ -72,6 +72,17 @@ public class DiscordService
         Console.WriteLine("Bot is connected and ready.");
         _isReady = true;
 
+        try
+        {
+            _botAdmin = _client.GetUser(_config.BotAdminID);
+            Console.WriteLine("Bot admin set");
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"Error getting bot admin user: {ex.Message}");
+        }
+
+
         foreach (var guild in _client.Guilds)
         {
             Console.WriteLine($"Bot is in: {guild.Name} (ID: {guild.Id})");
@@ -105,7 +116,76 @@ public class DiscordService
     // Handle (DM) Admin Commands
     private async Task HandleDMAdminCommands(SocketMessage message)
     {
+        string commandWithArgs = message.Content.Substring(1).Trim();
+        string[] parts = commandWithArgs.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string command = parts[0].ToLower(); // Just the command part
+                
+        string eventToDelete = string.Empty;
+        switch (command)
+        {
+            // return all events
+            case "events":
+                var events = _eventManager.GetAllEvents();
+                string eventList = string.Join("\n", events.Select(e => $"{e.Title} - {e.StartTime} - {e.Id}"));
+                try
+                {
+                    File.Create("events.txt").Close();
+                    File.WriteAllText("events.txt", eventList);
+                    await message.Channel.SendMessageAsync($"Current events:");
+                    await message.Channel.SendFileAsync("events.txt");
+                    File.Delete("events.txt");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error getting response: {ex.Message}");
+                    await message.Channel.SendMessageAsync("Error getting response.");
+                }
+                
+                break;
+            // This will delete a specific event when you send the event ID with the message ---> delete <eventID>
+            case "delete":
+                try
+                {
+                    int startPos = command.Length;
+                    if (startPos != 0)
+                    {
+                        eventToDelete = string.Join(" ", parts.Skip(1));
+                        string returnMessage = _jsonSaver.DeleteEvent(eventToDelete, _config.ServerId, _config.ChannelId);
+                        await message.Channel.SendMessageAsync(returnMessage);
+                        return;
+                    }
+                    else
+                    {
+                        await message.Channel.SendMessageAsync("No event ID provided.");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error getting response: {ex.Message}");
+                    await message.Channel.SendMessageAsync("Error getting response.");
+                }
+                break;
+                /// This will delete all .json files, and reload them
+            case "reset":
+                try
+                {
+                    foreach (var eventsAll in _eventManager.GetAllEvents())
+                    {
+                        _jsonSaver.DeleteEvent(eventsAll.Id, _config.ServerId, _config.ChannelId);
+                    }
+                    await message.Channel.SendMessageAsync("All events deleted.");
+                    await _googleCalendarService.GetUpcomingEventsAsync(_config.CalendarId);
+                    await message.Channel.SendMessageAsync("All events reloaded.");
 
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error getting response: {ex.Message}");
+                    await message.Channel.SendMessageAsync("Error getting response.");
+                }
+                break;
+        }
     }
 
     // Handle (Discord thread) Admin commands

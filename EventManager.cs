@@ -245,8 +245,7 @@ public class EventManager
         foreach (var oldEvent in oldEvents)
         {
             _events.Remove(oldEvent.Id);
-            // You might want to add a DeleteEvent method to JsonSaver
-            // await _jsonSaver.DeleteEventAsync(oldEvent.Id, oldEvent.ServerID, oldEvent.ChannelID);
+            await _jsonSaver.DeleteEventAsync(oldEvent.Id, oldEvent.ServerID, oldEvent.ChannelID);
         }
 
         if (_debugMode && oldEvents.Any())

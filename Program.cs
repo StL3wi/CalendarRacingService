@@ -101,7 +101,7 @@ namespace CalendarRacingService
         {
             try
             {
-                _discordService = new DiscordService(_config);
+                _discordService = new DiscordService(_config, _googleCalendarService);
                 await _discordService.StartClientAsync();
 
                 // Wait for Discord to be ready (this could be improved with a proper async signal) // *** FUTURE ME FIX THIS ***
